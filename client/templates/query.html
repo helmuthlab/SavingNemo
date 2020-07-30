@@ -10,7 +10,7 @@
         <link href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" />
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" rel="stylesheet" />
-        <title>Database</title> 
+        <title>Biomimic Database</title> 
     </head>
     <body>
         <!-- Links to header images-->
@@ -33,6 +33,9 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li><a href="http://www.northeastern.edu/helmuthlab/index.html"><span class="glyphicon glyphicon-home"></span> <strong>Back to Helmuth lab Home</strong></a></li>
+                        <li><a href="https://www.northeastern.edu/helmuthlab/Research/databases/metadata.xls" target="_blank"><span class="glyphicon glyphicon-upload"></span> <strong>Metadata</strong></a></li>
+                        <li><a href="http://www.northeastern.edu/helmuthlab/Research/databases/readme.html" target="_blank"><span class="glyphicon glyphicon-upload"></span> <strong>Readme file</strong></a></li>
+                        <li><a href="https://www.dropbox.com/sh/lmf6iw0tvdcvi5p/AAA0AGXjDrNqtn1A1kgJd5jYa?dl=0"><span class="glyphicon glyphicon-upload"></span> <strong>Site Parser Tool</strong></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if not session.logged_in %}
@@ -54,26 +57,30 @@
             </p>
         {% endif %}
         <div class="container text-danger">
-            <h1>DATABASE<h1>
+            <h1>INTERTIDAL LOGGER DATABASE<h1>
         </div>
         <div class="container text-right">            
-            <a href="#" data-toggle="popover" data-placement="left" class= "btn btn-info" data-trigger="hover" data-content="Please click and choose an option from each select field in the following order: Biomimic type, Country, State, Location, Zone, Sub Zone, Wave exposure and Statistic">
+            <a href="#" data-toggle="popover" data-placement="left" class= "btn btn-info" data-trigger="hover" data-content="Please click and choose an option from each select field in the following order: Logger type, Country, Region, Site, Zone, Substrate, Wave exposure and Statistic">
                 <span class="glyphicon glyphicon-question-sign"></span> Help
             </a>
         </div>
         <div class="query-box container">
             <strong class="text-danger"><em>fields marked with * are required</em></strong>
+	    <br>
+	    <strong class="text-danger"><em>Server will slow down with excessive downloads</em></strong>
+	    <br>
+   	    <strong class="text-danger"><em>Download at ~100k record partition is recommended</em></strong>
             <br><br>
             <form action="" method="get" id="query" data-toggle="validator" onsubmit="return false;" name="query" role="form" type="">
                 <!-- first row in query form -->
                 <div class="row">
                     <div class="col-md-3 form-group">
                         <div class="input-group">
-                            <label for="dropdown_menu_biomimic_type">Biomimic Type:<w class = "text-danger"> * <w> </label>
+                            <label for="dropdown_menu_biomimic_type">Logger Type:<w class = "text-danger"> * <w> </label>
                             <img src="../static/spinner.gif" alt="Loading.." id="spinner-biomimic" hidden>
                         </div>                        
                         <select id ="dropdown_menu_biomimic_type" class="form-control" required>
-                            <option value="">Please select Biomimic Type</option>
+                            <option value="">Please select Logger Type</option>
                             {% for type in form.biomimic_type %}
                                 <option value="{{ type }}">{{ type[1] }}</option>
                             {% endfor %}
@@ -91,20 +98,20 @@
                     </div>
                     <div class="col-md-3 form-group" id="dropdown_menu_state_name_div" >
                         <div class="input-group">
-                            <label for="dropdown_menu_state_name">State Name:<w class = "text-danger"> * <w> </label>
+                            <label for="dropdown_menu_state_name">Region Name:<w class = "text-danger"> * <w> </label>
                             <img src="../static/spinner.gif" alt="Loading.." id="spinner-state" hidden>
                         </div>
                         <select id ="dropdown_menu_state_name" class="form-control" required disabled>
-                            <option value="">Please select State Name</option>
+                            <option value="">Please select Region Name</option>
                         </select>                                                   
                     </div>
                     <div class="col-md-3 form-group" id="dropdown_menu_location_name_div">
                         <div class="input-group">
-                            <label for="dropdown_menu_location_name">Location Name:<w class = "text-danger"><strong> *</strong> <w> </label>
+                            <label for="dropdown_menu_location_name">Site Name:<w class = "text-danger"><strong> *</strong> <w> </label>
                             <img src="../static/spinner.gif" alt="Loading.." id="spinner-location" hidden>
                         </div>                        
                         <select id ="dropdown_menu_location_name" class="form-control" required disabled>
-                            <option value="">Please select Location Name</option>
+                            <option value="">Please select Site Name</option>
                         </select>
                     </div>
                 </div>
@@ -122,11 +129,11 @@
                     </div>
                     <div class="col-md-4 form-group" id="dropdown_menu_sub_zone_name_div">
                         <div class="input-group">
-                            <label for="dropdown_menu_sub_zone_name">Sub Zone:<w class = "text-danger"> * <w> </label>
+                            <label for="dropdown_menu_sub_zone_name">Substrate:<w class = "text-danger"> * <w> </label>
                             <img src="../static/spinner.gif" alt="Loading.." id="spinner-sub-zone" hidden>
                         </div>                                                                        
                         <select id ="dropdown_menu_sub_zone_name" class="form-control" required disabled>
-                            <option value="">Please select Sub Zone</option>
+                            <option value="">Please select Substrate</option>
                         </select>
                     </div>
                     <div class="col-md-4 form-group" id="dropdown_menu_wave_exp_name_div">
@@ -149,6 +156,7 @@
                                 {{ type }}
                             {% endfor%}
                         </select>
+                        <strong class="text-danger"><em>See Readme file for Raw output information</em></strong>
                     </div>
                     <div class="col-md-4 form-group" id="frequency-select">
                     </div>
